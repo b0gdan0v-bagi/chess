@@ -152,6 +152,7 @@
     <ClCompile Include="game\field.cpp" />
     <ClCompile Include="game\figure.cpp" />
     <ClCompile Include="game\pawn.cpp" />
+    <ClCompile Include="game\Text.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="game\field.h" />
     <ClInclude Include="game\figure.h" />
     <ClInclude Include="game\pawn.h" />
+    <ClInclude Include="game\Text.h" />
     <ClInclude Include="utils\Utils.h" />
     <ClInclude Include="utils\Singleton.h" />
   </ItemGroup>

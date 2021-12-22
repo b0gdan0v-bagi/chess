@@ -1,0 +1,9 @@
+0.001094 : Logger started
+
+0.001694 : Succsesfully readed main.cfg
+0.002527 : Succsesfully readed screen.cfg
+0.0033124 : Succsesfully readed field.cfg
+0.0041019 : Succsesfully readed resourses.cfg
+0.0404266 : Succsesfully loaded chess.png
+0.041565 : Font TimesNewRoman succsefully loaded
+0.0421025 : All resourses succsefully loaded

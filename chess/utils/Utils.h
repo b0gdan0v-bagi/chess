@@ -3,10 +3,18 @@
 #include <vector>
 
 
-enum eCellStyle
+enum class eCellStyle
 {
 	Black,
 	White
+};
+
+enum class eDirection
+{
+	Top,
+	Right,
+	Bottom,
+	Left
 };
 
 namespace Utils

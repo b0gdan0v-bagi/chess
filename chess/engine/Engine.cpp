@@ -9,11 +9,17 @@ void Engine::OnStarted()
 	SetWindow();
 
 	mField = new Field(&window, mResolution);
+	_clock = sf::Clock();
 }
 
 void Engine::OnRestarted()
 {
 	// dont needed now
+}
+
+void Engine::OnEnded()
+{
+	ResourseManager->Stop();
 }
 
 void Engine::SetWindow()
@@ -26,6 +32,7 @@ void Engine::SetWindow()
 		mResolution.x = std::stoi(split[0]);
 		mResolution.y = std::stoi(split[1]);
 	}
+	_timeDiv = std::stof(screen->GetData("clock_const"));
 	window.create(sf::VideoMode(mResolution.x, mResolution.y), "Chess", sf::Style::Close);
 }
 
@@ -36,9 +43,25 @@ void Engine::Draw()
 	window.display();
 }
 
-void Engine::Update(const float dt)
+void Engine::Input()
 {
-	mField->Update(dt);
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+		{
+			window.close();
+			return;
+		}
+	}
+}
+
+void Engine::Update()
+{
+	float time = _clock.getElapsedTime().asMicroseconds();
+	_clock.restart();
+	time = time / _timeDiv;
+	mField->Update(time);
 }
 
 Engine::Engine()
@@ -48,27 +71,17 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	ResourseManager->Stop();
+	OnEnded();
 }
 
-int Engine::Start()
+void Engine::Start()
 {
 	OnStarted();
-	sf::Clock clock;
+	
 	while (window.isOpen())
 	{
-		sf::Event event;
-		float time = clock.getElapsedTime().asMicroseconds();
-		clock.restart();
-		time = time / 800;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed) 
-			{
-				window.close();
-				return 0;
-			}
-		}
+		Input();
+		Update();
 		Draw();
 	}
 }

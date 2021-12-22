@@ -13,20 +13,25 @@ class Engine
 	sf::RenderWindow window;
 	sf::Vector2f mResolution;
 	Field* mField;
+	float _timeDiv;
 
 	sf::Image _image;
+	sf::Clock _clock;
 
 	void OnStarted();
 	void OnRestarted();
+	void OnEnded();
+
 	void SetWindow();
 	void Draw();
-	void Update(const float dt);
+	void Input();
+	void Update();
 
 public:
 	Engine();
 	~Engine();
 
-	int Start();
+	void Start();
 
 
 };

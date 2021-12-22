@@ -1,6 +1,7 @@
 #include "Resourse.h"
 #include "Logger.h"
 #include "Parser.h"
+#include "Utils.h"
 
 ItemBase::ItemBase(const std::string& name) :_name(name)
 {}
@@ -27,17 +28,28 @@ bool Resourse::LoadResourses()
 
 	for (const auto& name : names)
 	{
-		ItemTexture* item = new ItemTexture(name);
-		if (item->Load())
+		auto split = Utils::Split(name, ".");
+		if (split.size() == 2) 
 		{
-			_data.insert(std::make_pair(name, item));
-		}
-		else
-		{
-			delete item;
-			LoggerManager->logFull("Problem with loading " + name);
+			ItemBase* item = nullptr;
+			if (split[1] == "png") {
+				item = new ItemTexture(split[0]);
+			}
+			else if (split[1] == "ttf") 
+			{
+				item = new ItemFont(split[0]);
+			}
+			if (item->Load())
+			{
+				_data.insert(std::make_pair(split[0], item));
+			}
+			else
+			{
+				delete item;
+				LoggerManager->logFull("Problem with loading " + name);
 
-			return false;
+				return false;
+			}
 		}
 	}
 	
@@ -99,4 +111,24 @@ bool ItemData::Load()
 		return true;
 	return false;
 	
+}
+
+ItemFont::ItemFont(const std::string& name) : ItemBase(name)
+{
+}
+
+sf::Font ItemFont::GetData()
+{
+	return _data;
+}
+
+bool ItemFont::Load()
+{
+	if (_data.loadFromFile("data/" + _name + ".ttf"))
+	{
+		LoggerManager->logFull("Font " + _name + " succsefully loaded");
+		return true;
+	}
+	LoggerManager->logFull("Font " + _name + " not loaded");
+	return false;
 }

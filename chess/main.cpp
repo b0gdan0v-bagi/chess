@@ -2,6 +2,6 @@
 
 int main()
 {
-    return GameEngine->Start();
+    GameEngine->Start();
 }
 

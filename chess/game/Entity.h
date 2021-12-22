@@ -46,6 +46,9 @@ public:
 
 	void SetPosition(const sf::Vector2f& pos) { _pos = pos; }
 	sf::Vector2f GetPosition() { return _pos; }
+
+	void SetSize(const sf::Vector2f& size) { _size = size; }
+	sf::Vector2f GetSize() { return _size; }
 };
 
 

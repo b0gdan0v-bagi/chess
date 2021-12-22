@@ -16,6 +16,7 @@ class Cell : public Entity
 public:
 	Cell(const Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord);
 	void SetColor(sf::Color color) { mColor = color; }
+	const sf::Vector2i GetCoord() { return mCoord; };
 };
 
 

@@ -36,6 +36,15 @@ public:
 	virtual bool Load() override;
 };
 
+class ItemFont : public ItemBase
+{
+	sf::Font _data;
+public:
+	ItemFont(const std::string& name);
+	sf::Font GetData();
+	virtual bool Load() override;
+};
+
 class Resourse
 {
 	std::unordered_map<std::string, ItemBase*> _data;
