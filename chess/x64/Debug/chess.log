@@ -1,0 +1,33 @@
+﻿  Engine.cpp
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(26,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(27,28): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(29,56): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(29,41): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(61,14): warning C4244: 'initializing': conversion from 'sf::Int64' to 'float', possible loss of data
+  cell.cpp
+  field.cpp
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(25,68): warning C4267: 'argument': conversion from 'size_t' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  main.cpp
+  Generating Code...
+C:\Users\Andrei\source\repos\chess\chess\engine\Engine.cpp(74): warning C4715: 'Engine::Start': not all control paths return a value
+  chess.vcxproj -> C:\Users\Andrei\source\repos\chess\x64\Debug\chess.exe
