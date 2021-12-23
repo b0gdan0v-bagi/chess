@@ -42,7 +42,7 @@ void Field::CreateFigures()
 	auto figures = Utils::Split(figuresData, ";");
 	std::vector<std::string> colors = { "black", "white" }; // can be moved to config in future
 	for (const auto& color : colors) {
-		const ePlayerColor c = color == "black" ? ePlayerColor::Black : ePlayerColor::White;
+		const ePlayerColor c = color == "black" ? ePlayerColor::Black : ePlayerColor::White; // i want magic_enum here :(
 		for (const auto& figureName : figures)
 		{
 			// figure fabric
@@ -58,9 +58,10 @@ void Field::CreateFigures()
 				if (figureName == "pawn")
 				{
 					figure = new Pawn(_window, c, mCellSize, mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
-					auto cell = GetCell(x, y);
-					cell->SetFigure(figure);
 				}
+				//else if { etc etc }
+				auto cell = GetCell(x, y);
+				cell->SetFigure(figure);
 			}
 		}
 	}

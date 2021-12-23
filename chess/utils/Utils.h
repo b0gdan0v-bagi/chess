@@ -2,6 +2,10 @@
 #include <string>
 #include <vector>
 
+enum class eGameStyle
+{
+	PvE
+};
 
 enum class eCellStyle
 {

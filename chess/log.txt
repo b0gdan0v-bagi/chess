@@ -1,0 +1,11 @@
+0.0009239 : Logger started
+
+0.0014126 : Succsesfully readed main.cfg
+0.0020758 : Succsesfully readed screen.cfg
+0.0026982 : Succsesfully readed field.cfg
+0.0033298 : Succsesfully readed figures.cfg
+0.0040732 : Succsesfully readed resourses.cfg
+0.0601448 : Succsesfully loaded black_pawn.png
+0.101715 : Succsesfully loaded white_pawn.png
+0.103005 : Font TimesNewRoman succsefully loaded
+0.103629 : All resourses succsefully loaded

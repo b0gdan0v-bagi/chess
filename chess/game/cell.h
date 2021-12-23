@@ -22,6 +22,8 @@ public:
 	void SetColor(sf::Color color) { mColor = color; }
 	const sf::Vector2i GetCoord() { return mCoord; };
 	void SetFigure(Figure* figure);
+	void UnsetFigure();
+	bool HasFigure();
 };
 
 

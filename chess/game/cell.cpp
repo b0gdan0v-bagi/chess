@@ -30,3 +30,14 @@ void Cell::SetFigure(Figure* figure)
 	figure->SetCell(this);
 	mFigure = figure;
 }
+
+void Cell::UnsetFigure()
+{
+	ClearChidren();
+	mFigure = nullptr;
+}
+
+bool Cell::HasFigure()
+{
+	return mFigure != nullptr;
+}
