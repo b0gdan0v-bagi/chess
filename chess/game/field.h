@@ -14,14 +14,13 @@ class Field : public Entity
 	sf::Vector2f mCellSize;
 	sf::Vector2f mPlayFieldSize;
 	sf::Vector2f mTextIndentSize;
+	sf::Vector2f mResoultion;
 
 	void CreateCells();
 	void CreateLabels();
 	void CreateFigures();
 
 	void OnEnded();
-
-	std::vector<sf::Text*> mLabels;
 
 	virtual void DrawSelf() override;
 	virtual void UpdateSelf(const float dt) override {};

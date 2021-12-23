@@ -17,6 +17,12 @@ enum class eDirection
 	Left
 };
 
+enum class ePlayerColor
+{
+	Black,
+	White
+};
+
 namespace Utils
 {
 	static std::vector<std::string> Split(const std::string& str, const std::string& delimiter)

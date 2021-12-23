@@ -5,7 +5,11 @@
 
 void Field::DrawSelf()
 {
-
+	auto test = ResourseManager->GetData<ItemTexture>("black_pawn")->GetSprite();
+	sf::Vector2f v = { test.getLocalBounds().width, test.getLocalBounds().height };
+	auto scale = sf::Vector2f(mCellSize.x  / v.x, mCellSize.x / v.x);
+	test.setScale(scale);
+	_window->draw(test);
 }
 
 void Field::CreateCells()
@@ -17,7 +21,7 @@ void Field::CreateCells()
 		for (size_t x = 0; x < mFieldSize; x++)
 		{
 			Cell* cell = new Cell(this, _window, mCellSize, sf::Vector2i(x, y));
-			cell->SetColor(black ? sf::Color::Black : sf::Color::White);
+			cell->SetColor(black ? sf::Color::Blue : sf::Color::White);
 			mCellsData[x + y * mFieldSize] = cell;
 			cell->SetPosition(sf::Vector2f(x * mCellSize.x, y * mCellSize.y) + mTextIndentSize);
 			AddChild(cell);
@@ -37,6 +41,7 @@ void Field::CreateFigures()
 Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	: Entity("field", window)
 	, mFieldSize(8)
+	, mResoultion(resolution)
 {
 	SetTopOwner();
 	auto data = ResourseManager->GetData<ItemData>("field");
@@ -82,11 +87,6 @@ void Field::CreateLabels()
 
 void Field::OnEnded()
 {
-	for (auto& label : mLabels)
-	{
-		delete label;
-	}
-	mLabels.clear();
 }
 
 Cell* Field::GetCell(const int x, const int y)
