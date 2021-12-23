@@ -1,6 +1,7 @@
 #include "player.h"
 
-Player::Player(Field* field, ePlayerColor color) :mField(field), mPlayerColor(color)
+Player::Player(Field* field, ePlayerColor color) 
+	:mField(field), mPlayerColor(color), mIsReadyToMove(false)
 {
 }
 

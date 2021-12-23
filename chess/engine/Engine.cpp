@@ -10,6 +10,7 @@ void Engine::OnStarted()
 
 	mField = new Field(&window, mResolution);
 	_clock = sf::Clock();
+	EventManager->SetWindow(&window);
 }
 
 void Engine::OnRestarted()
@@ -19,6 +20,7 @@ void Engine::OnRestarted()
 
 void Engine::OnEnded()
 {
+	delete mField;
 	ResourseManager->Stop();
 }
 
@@ -34,6 +36,7 @@ void Engine::SetWindow()
 	}
 	_timeDiv = std::stof(screen->GetData("clock_const"));
 	window.create(sf::VideoMode(mResolution.x, mResolution.y), "Chess", sf::Style::Close);
+	window.setView(sf::View(sf::FloatRect(0.f, 0.f, mResolution.x, mResolution.y)));
 }
 
 void Engine::Draw()
@@ -45,15 +48,7 @@ void Engine::Draw()
 
 void Engine::Input()
 {
-	sf::Event event;
-	while (window.pollEvent(event))
-	{
-		if (event.type == sf::Event::Closed)
-		{
-			window.close();
-			return;
-		}
-	}
+	EventManager->HandleSFMLEvents();
 }
 
 void Engine::Update()
@@ -66,24 +61,26 @@ void Engine::Update()
 
 Engine::Engine()
 	:mResolution(640.f, 480.f) // default
-	,mField(nullptr)
+	, mField(nullptr)
+	, _timeDiv(800)
 {}
 
 Engine::~Engine()
 {
-	OnEnded();
 }
 
 void Engine::Start()
 {
 	OnStarted();
-	
+
 	while (window.isOpen())
 	{
 		Input();
 		Update();
 		Draw();
 	}
+
+	OnEnded();
 }
 
 

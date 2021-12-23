@@ -12,11 +12,13 @@ class Cell : public Entity
 	const sf::Vector2i mCoord;
 	sf::Color mColor;
 
+	bool mSelected;
+
 	Figure* mFigure;
 
 	virtual void DrawSelf() override;
 	virtual void UpdateSelf(const float dt) override;
-	virtual bool OnEventSelf(sf::Event event) override { return false; };
+	virtual bool OnEventSelf(GameEventBase* event) override { return false; };
 public:
 	Cell(const Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord);
 	void SetColor(sf::Color color) { mColor = color; }
@@ -24,6 +26,10 @@ public:
 	void SetFigure(Figure* figure);
 	void UnsetFigure();
 	bool HasFigure();
+	Figure* GetFigure() { return mFigure; }
+
+	void SetSelected(bool selected) { mSelected = selected; }
+	bool IsSelected() { return mSelected; }
 };
 
 

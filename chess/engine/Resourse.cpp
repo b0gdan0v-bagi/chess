@@ -67,11 +67,11 @@ void Resourse::Start()
 
 void Resourse::Stop()
 {
-	for (auto& data : _data)
-	{
-		delete &data;
-	}
-	_data.clear();
+	//for (auto& data : _data)
+	//{
+	//	delete &data;
+	//}
+	//_data.clear();
 }
 
 ItemTexture::ItemTexture(const std::string& name) : ItemBase(name)

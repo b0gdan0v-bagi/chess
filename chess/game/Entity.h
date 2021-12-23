@@ -21,11 +21,11 @@ protected:
 	sf::RenderWindow* _window;
 	void Draw();
 	void Update(const float dt);
-	bool OnEvent(sf::Event event);
+	bool OnEvent(GameEventBase* event);
 private:
 	virtual void DrawSelf() = 0;
 	virtual void UpdateSelf(const float dt) = 0;
-	virtual bool OnEventSelf(sf::Event event) = 0;
+	virtual bool OnEventSelf(GameEventBase* event) = 0;
 
 public:
 

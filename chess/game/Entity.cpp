@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Logger.h"
 
 void Entity::Draw()
 {
@@ -18,7 +19,7 @@ void Entity::Update(const float dt)
 	}
 }
 
-bool Entity::OnEvent(sf::Event event)
+bool Entity::OnEvent(GameEventBase* event)
 {
 	if (OnEventSelf(event));
 	{
@@ -56,6 +57,7 @@ void Entity::ClearChildrenSafe()
 {
 	for (auto& child : _children)
 	{
+		//LoggerManager->logFull(child->GetName() + " succsefully deleted");
 		delete child;
 	}
 	_children.clear();

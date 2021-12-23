@@ -1,6 +1,9 @@
 #pragma once
 #include <memory>
 #include "player.h"
+#include "Utils.h"
+
+class Player;
 
 class PlayerController
 {
@@ -12,7 +15,14 @@ class PlayerController
 	Field* mField;
 	void CreatePlayers();
 
+	float mDelay, mCount;
+
 public:
 	PlayerController(Field* field);
+	Player* GetSelectedPlayer() { return selectedPlayer; }
+	void OnMoveEnded();
+	void Update(const float dt);
+	/*bool HumanControl() { return selectedPlayer->IsHuman(); }
+	ePlayerColor GetCurrentPlayerColor() { return selectedPlayer->GetPlayerColor(); }*/
 	~PlayerController();
 };

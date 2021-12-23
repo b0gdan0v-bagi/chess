@@ -4,7 +4,8 @@
 
 enum class eGameStyle
 {
-	PvE
+	PvE,
+	PvP
 };
 
 enum class eCellStyle

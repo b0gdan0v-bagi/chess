@@ -4,7 +4,7 @@ void Cell::DrawSelf()
 {
 	auto shape = sf::RectangleShape(_size);
 	shape.setPosition(GetPosition());
-	shape.setFillColor(mColor);
+	shape.setFillColor(mSelected ? sf::Color::Red : mColor);
 	_window->draw(shape);
 }
 
@@ -18,6 +18,7 @@ Cell::Cell(const Field* field, sf::RenderWindow* window, const sf::Vector2f size
 	, mField(field)
 	, mCoord(coord)
 	, mFigure(nullptr)
+	, mSelected(false)
 {
 	_size = size;
 	

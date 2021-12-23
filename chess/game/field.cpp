@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Text.h"
 #include "pawn.h"
+#include "player.h"
 
 void Field::DrawSelf()
 {
@@ -12,6 +13,66 @@ void Field::DrawSelf()
 	test.setScale(scale);*/
 	//_window->draw(test);
 }
+void Field::UpdateSelf(const float dt)
+{
+	mPlayerController->Update();
+}
+
+bool Field::OnEventSelf(GameEventBase* event)
+{
+	if (event->GetType() == eEventType::MouseClicked)
+	{
+
+		auto ev = static_cast<GameEventMouseClicked*>(event);
+		if (auto cell = GetCell(GetCoordFromMouse(ev->GetMousePos())))
+		{
+			auto player = mPlayerController->GetSelectedPlayer();
+
+			if (!player->IsReadyToMove())
+			{
+				if (auto figure = cell->GetFigure())
+				{
+					if (player->IsHuman())
+					{
+						if (figure->GetPlayerColor() == player->GetPlayerColor())
+						{
+							UnselectCells();
+							mPotentialCells = GetFreeCells(cell);
+							if (!mPotentialCells.empty())
+							{
+								for (auto& marked : mPotentialCells)
+								{
+									marked->SetSelected(true);
+								}
+								mSelectedCell = cell;
+								player->SetIsReadyToMove(true);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (auto figure = mSelectedCell->GetFigure())
+				{
+					if (auto subCell = ClickedAvaliableCell(cell))
+					{
+						subCell->SetFigure(figure);
+						//figure->SetPosition(mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
+						mSelectedCell->UnsetFigure();
+						player->SetIsReadyToMove(false);
+						UnselectCells();
+						mPlayerController->OnMoveEnded();
+					}
+				}
+			}
+		}
+
+	}
+	return true;
+
+}
+
 
 void Field::CreateCells()
 {
@@ -38,7 +99,7 @@ void Field::CreateCells()
 void Field::CreateFigures()
 {
 	auto data = ResourseManager->GetData<ItemData>("field");
-	auto figuresData = ResourseManager->GetData<ItemData>("figures")->GetData("figures");
+	auto figuresData = data->GetData("figures");
 	auto figures = Utils::Split(figuresData, ";");
 	std::vector<std::string> colors = { "black", "white" }; // can be moved to config in future
 	for (const auto& color : colors) {
@@ -47,8 +108,6 @@ void Field::CreateFigures()
 		{
 			// figure fabric
 			Figure* figure = nullptr;
-			
-
 			auto positionsData = data->GetData(color + "_" + figureName);
 			auto positions = Utils::Split(positionsData, ";");
 			for (const auto& pos : positions)
@@ -71,7 +130,9 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	: Entity("field", window)
 	, mFieldSize(8)
 	, mResoultion(resolution)
+	, mSelectedCell(nullptr)
 {
+	EventManager->RegisterListener(this);
 	SetTopOwner();
 	auto data = ResourseManager->GetData<ItemData>("field");
 	mFieldSize = std::stoi(data->GetData("size"));
@@ -91,6 +152,8 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	CreateCells();
 	CreateLabels();
 	CreateFigures();
+
+	mPlayerController = new PlayerController(this);
 }
 
 void Field::CreateLabels()
@@ -117,6 +180,7 @@ void Field::CreateLabels()
 
 void Field::OnEnded()
 {
+	delete mPlayerController;
 }
 
 Cell* Field::GetCell(const int x, const int y)
@@ -148,5 +212,52 @@ Cell* Field::GetCell(Cell* cell, eDirection dir)
 Field::~Field()
 {
 	OnEnded();
+}
+
+std::vector<Cell*> Field::GetFreeCells(Cell* cell)
+{
+	std::vector<Cell*> res;
+	if (cell)
+	{
+		for (size_t i = 0, size = static_cast<size_t>(eDirection::Count); i < size; i++)
+		{
+			auto subCell = GetCell(cell, static_cast<eDirection>(i));
+			if (subCell)
+			{
+				if (!subCell->HasFigure())
+					res.push_back(subCell);
+			}
+		}
+	}
+	return res;
+}
+
+void Field::UnselectCells()
+{
+	for (auto& cell : mCellsData)
+	{
+		cell->SetSelected(false);
+	}
+	mPotentialCells.clear();
+}
+
+Cell* Field::ClickedAvaliableCell(Cell* cell)
+{
+	if (!mSelectedCell || !cell)
+		return nullptr;
+	for (auto& subCell : mPotentialCells)
+	{
+		if (cell == subCell)
+			return cell;
+	}
+	return nullptr;
+}
+
+sf::Vector2i Field::GetCoordFromMouse(const sf::Vector2i mouse)
+{
+	auto vec = mouse - sf::Vector2i(mTextIndentSize.x, mTextIndentSize.y);
+	vec.x /= mCellSize.x;
+	vec.y /= mCellSize.y;
+	return vec;
 }
 
