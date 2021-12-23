@@ -10,14 +10,22 @@ void Cell::DrawSelf()
 
 void Cell::UpdateSelf(const float dt)
 {
-	_sprite.setPosition(GetPosition());
+
 }
 
 Cell::Cell(const Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord) 
 	: Entity("cell",window)
 	, mField(field)
 	, mCoord(coord)
+	, mFigure(nullptr)
 {
 	_size = size;
 	
+}
+
+void Cell::SetFigure(Figure* figure)
+{
+	ClearChidren();
+	AddChild(figure);
+	mFigure = figure;
 }

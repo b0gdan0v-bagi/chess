@@ -1,6 +1,11 @@
-﻿  pawn.cpp
-  Text.cpp
-  main.cpp
-  Generating Code...
-  LINK : C:\Users\bagiz\source\repos\chess\x64\Debug\chess.exe not found or not built by the last incremental link; performing full link
-  chess.vcxproj -> C:\Users\bagiz\source\repos\chess\x64\Debug\chess.exe
+﻿  field.cpp
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(24,69): warning C4267: 'argument': conversion from 'size_t' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(57,44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(57,44): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(103,25): warning C4267: 'initializing': conversion from 'size_t' to 'char', possible loss of data
+C:\Users\Andrei\source\repos\chess\chess\game\field.cpp(103,25): warning C4267: 'initializing': conversion from 'size_t' to 'const char', possible loss of data
+  chess.vcxproj -> C:\Users\Andrei\source\repos\chess\x64\Debug\chess.exe

@@ -2,7 +2,9 @@
 
 #include "Entity.h"
 #include "Utils.h"
+#include "cell.h"
 
+class Cell;
 
 class Figure : public Entity
 {
@@ -15,8 +17,13 @@ protected:
 	sf::Vector2f mPos;
 	ePlayerColor mPlayerColor;
 
+	Cell* mCell;
+
 public:
 	Figure(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
+
+	void SetCell(Cell* cell) { mCell = cell; }
+	Cell* GetCell() { return mCell; }
 };
 
 

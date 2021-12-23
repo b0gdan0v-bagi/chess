@@ -2,14 +2,15 @@
 #include "Resourse.h"
 #include "Utils.h"
 #include "Text.h"
+#include "pawn.h"
 
 void Field::DrawSelf()
 {
-	auto test = ResourseManager->GetData<ItemTexture>("black_pawn")->GetSprite();
-	sf::Vector2f v = { test.getLocalBounds().width, test.getLocalBounds().height };
-	auto scale = sf::Vector2f(mCellSize.x  / v.x, mCellSize.x / v.x);
-	test.setScale(scale);
-	_window->draw(test);
+	//auto test = ResourseManager->GetData<ItemTexture>("black_pawn")->GetSprite();
+	/*sf::Vector2f v = { test.getLocalBounds().width, test.getLocalBounds().height };
+	auto scale = sf::Vector2f(mCellSize.x / v.x, mCellSize.x / v.x);
+	test.setScale(scale);*/
+	//_window->draw(test);
 }
 
 void Field::CreateCells()
@@ -36,6 +37,34 @@ void Field::CreateCells()
 
 void Field::CreateFigures()
 {
+	auto data = ResourseManager->GetData<ItemData>("field");
+	auto figuresData = ResourseManager->GetData<ItemData>("figures")->GetData("figures");
+	auto figures = Utils::Split(figuresData, ";");
+	std::vector<std::string> colors = { "black", "white" }; // can be moved to config in future
+	for (const auto& color : colors) {
+		const ePlayerColor c = color == "black" ? ePlayerColor::Black : ePlayerColor::White;
+		for (const auto& figureName : figures)
+		{
+			// figure fabric
+			Figure* figure = nullptr;
+			
+
+			auto positionsData = data->GetData(color + "_" + figureName);
+			auto positions = Utils::Split(positionsData, ";");
+			for (const auto& pos : positions)
+			{
+				const int x = pos[0] - 'a';
+				const int y = mFieldSize - pos[1] + '0';
+				if (figureName == "pawn")
+				{
+					figure = new Pawn(_window, c, mCellSize, mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
+					auto cell = GetCell(x, y);
+					cell->SetFigure(figure);
+					figure->SetCell(cell);
+				}
+			}
+		}
+	}
 }
 
 Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
@@ -61,6 +90,7 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	mCellSize = sf::Vector2f(static_cast<float>(mPlayFieldSize.x / mFieldSize), static_cast<float>(mPlayFieldSize.y / mFieldSize));
 	CreateCells();
 	CreateLabels();
+	CreateFigures();
 }
 
 void Field::CreateLabels()

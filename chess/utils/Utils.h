@@ -21,7 +21,8 @@ enum class eDirection
 enum class ePlayerColor
 {
 	Black,
-	White
+	White,
+	Count
 };
 
 enum class eFigureType

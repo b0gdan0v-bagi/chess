@@ -43,6 +43,17 @@ Entity::Entity(const std::string& name, sf::RenderWindow* window)
 
 Entity::~Entity()
 {
+	ClearChildrenSafe();
+}
+
+void Entity::AddChild(Entity* child)
+{
+	child->SetParent(this);
+	_children.push_back(child);
+}
+
+void Entity::ClearChildrenSafe()
+{
 	for (auto& child : _children)
 	{
 		delete child;
@@ -50,8 +61,7 @@ Entity::~Entity()
 	_children.clear();
 }
 
-void Entity::AddChild(Entity* child)
+void Entity::ClearChidren()
 {
-	child->SetParent(this);
-	_children.push_back(child);
+	_children.clear();
 }

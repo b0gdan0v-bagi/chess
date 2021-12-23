@@ -48,6 +48,9 @@ public:
 
 	void SetSize(const sf::Vector2f& size) { _size = size; }
 	sf::Vector2f GetSize() { return _size; }
+
+	void ClearChildrenSafe();
+	void ClearChidren();
 };
 
 
