@@ -60,7 +60,6 @@ void Field::CreateFigures()
 					figure = new Pawn(_window, c, mCellSize, mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
 					auto cell = GetCell(x, y);
 					cell->SetFigure(figure);
-					figure->SetCell(cell);
 				}
 			}
 		}

@@ -27,5 +27,6 @@ void Cell::SetFigure(Figure* figure)
 {
 	ClearChidren();
 	AddChild(figure);
+	figure->SetCell(this);
 	mFigure = figure;
 }
