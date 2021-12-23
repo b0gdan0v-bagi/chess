@@ -14,13 +14,20 @@ enum class eDirection
 	Top,
 	Right,
 	Bottom,
-	Left
+	Left,
+	Count
 };
 
 enum class ePlayerColor
 {
 	Black,
 	White
+};
+
+enum class eFigureType
+{
+	Pawn,
+	Count
 };
 
 namespace Utils

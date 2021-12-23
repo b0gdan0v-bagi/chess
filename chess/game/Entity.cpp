@@ -34,15 +34,12 @@ bool Entity::OnEvent(sf::Event event)
 	return false;
 }
 
-
-Entity::Entity(const std::string& name) :_name(name), _isTopOwner(false), _parent(nullptr)
-{
-}
-
-Entity::Entity(const std::string& name, sf::RenderWindow* window) : Entity(name)
-{
-	_window = window;
-}
+Entity::Entity(const std::string& name, sf::RenderWindow* window) 
+	:_name(name)
+	,_isTopOwner(false)
+	,_parent(nullptr)
+	,_window(window)
+{}
 
 Entity::~Entity()
 {

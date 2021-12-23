@@ -29,7 +29,6 @@ private:
 
 public:
 
-	Entity(const std::string& name);
 	Entity(const std::string& name, sf::RenderWindow* window);
 	virtual ~Entity();
 
