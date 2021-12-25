@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 #include "Singleton.h"
@@ -12,7 +13,7 @@ class Engine
 {
 	sf::RenderWindow window;
 	sf::Vector2f mResolution;
-	Field* mField;
+	std::unique_ptr<Field> mField;
 	float _timeDiv;
 
 	sf::Image _image;

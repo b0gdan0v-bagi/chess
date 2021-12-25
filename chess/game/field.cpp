@@ -15,62 +15,18 @@ void Field::DrawSelf()
 }
 void Field::UpdateSelf(const float dt)
 {
-	mPlayerController->Update();
+	mPlayerController->Update(dt);
 }
 
 bool Field::OnEventSelf(GameEventBase* event)
 {
 	if (event->GetType() == eEventType::MouseClicked)
 	{
-
 		auto ev = static_cast<GameEventMouseClicked*>(event);
-		if (auto cell = GetCell(GetCoordFromMouse(ev->GetMousePos())))
-		{
-			auto player = mPlayerController->GetSelectedPlayer();
-
-			if (!player->IsReadyToMove())
-			{
-				if (auto figure = cell->GetFigure())
-				{
-					if (player->IsHuman())
-					{
-						if (figure->GetPlayerColor() == player->GetPlayerColor())
-						{
-							UnselectCells();
-							mPotentialCells = GetFreeCells(cell);
-							if (!mPotentialCells.empty())
-							{
-								for (auto& marked : mPotentialCells)
-								{
-									marked->SetSelected(true);
-								}
-								mSelectedCell = cell;
-								player->SetIsReadyToMove(true);
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				if (auto figure = mSelectedCell->GetFigure())
-				{
-					if (auto subCell = ClickedAvaliableCell(cell))
-					{
-						subCell->SetFigure(figure);
-						//figure->SetPosition(mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
-						mSelectedCell->UnsetFigure();
-						player->SetIsReadyToMove(false);
-						UnselectCells();
-						mPlayerController->OnMoveEnded();
-					}
-				}
-			}
-		}
-
+		mPlayerController->MakeControlledMove(GetCell(GetCoordFromMouse(ev->GetMousePos())));
+		return true;
 	}
-	return true;
-
+	return true; // i dont need events go to children now
 }
 
 
@@ -130,7 +86,6 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	: Entity("field", window)
 	, mFieldSize(8)
 	, mResoultion(resolution)
-	, mSelectedCell(nullptr)
 {
 	EventManager->RegisterListener(this);
 	SetTopOwner();
@@ -153,7 +108,7 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	CreateLabels();
 	CreateFigures();
 
-	mPlayerController = new PlayerController(this);
+	mPlayerController = std::make_unique<PlayerController>(this);
 }
 
 void Field::CreateLabels()
@@ -180,7 +135,7 @@ void Field::CreateLabels()
 
 void Field::OnEnded()
 {
-	delete mPlayerController;
+
 }
 
 Cell* Field::GetCell(const int x, const int y)
@@ -238,22 +193,9 @@ void Field::UnselectCells()
 	{
 		cell->SetSelected(false);
 	}
-	mPotentialCells.clear();
 }
 
-Cell* Field::ClickedAvaliableCell(Cell* cell)
-{
-	if (!mSelectedCell || !cell)
-		return nullptr;
-	for (auto& subCell : mPotentialCells)
-	{
-		if (cell == subCell)
-			return cell;
-	}
-	return nullptr;
-}
-
-sf::Vector2i Field::GetCoordFromMouse(const sf::Vector2i mouse)
+sf::Vector2i Field::GetCoordFromMouse(const sf::Vector2i& mouse)
 {
 	auto vec = mouse - sf::Vector2i(mTextIndentSize.x, mTextIndentSize.y);
 	vec.x /= mCellSize.x;

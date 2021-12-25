@@ -16,15 +16,15 @@ class Field
 	
 	size_t mFieldSize;
 	std::vector<Cell*> mCellsData;
-	std::vector<Cell*> mPotentialCells;
-	Cell* mSelectedCell;
+	//std::vector<Cell*> mPotentialCells;
+	//Cell* mSelectedCell;
 
 	sf::Vector2f mCellSize;
 	sf::Vector2f mPlayFieldSize;
 	sf::Vector2f mTextIndentSize;
 	sf::Vector2f mResoultion;
 
-	PlayerController* mPlayerController;
+	std::unique_ptr<PlayerController> mPlayerController;
 
 	void CreateCells();
 	void CreateLabels();
@@ -46,8 +46,7 @@ public:
 	std::vector<Cell*> GetFreeCells(Cell* cell);
 
 	void UnselectCells();
-	sf::Vector2i GetCoordFromMouse(const sf::Vector2i mouse);
-	Cell* ClickedAvaliableCell(Cell* cell);
+	sf::Vector2i GetCoordFromMouse(const sf::Vector2i& mouse);
 };
 
 

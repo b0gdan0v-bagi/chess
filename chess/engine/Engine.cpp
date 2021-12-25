@@ -8,7 +8,7 @@ void Engine::OnStarted()
 	ResourseManager->Start();
 	SetWindow();
 
-	mField = new Field(&window, mResolution);
+	mField = std::make_unique<Field>(&window, mResolution);
 	_clock = sf::Clock();
 	EventManager->SetWindow(&window);
 }
@@ -20,7 +20,6 @@ void Engine::OnRestarted()
 
 void Engine::OnEnded()
 {
-	delete mField;
 	ResourseManager->Stop();
 }
 

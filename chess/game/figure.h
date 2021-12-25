@@ -25,6 +25,8 @@ public:
 	ePlayerColor GetPlayerColor() { return mPlayerColor; }
 	void SetCell(Cell* cell) { mCell = cell; }
 	Cell* GetCell() { return mCell; }
+
+	virtual std::vector<Cell*> GetPossibleCells() = 0;
 };
 
 

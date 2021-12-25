@@ -8,10 +8,9 @@ class Player;
 class PlayerController
 {
 	eGameStyle mGameStyle;
-	Player* player_1;
-	Player* player_2;
+	std::shared_ptr<Player> mSelectedPlayer;
+	std::shared_ptr<Player> mAnotherPlayer;
 
-	Player* selectedPlayer;
 	Field* mField;
 	void CreatePlayers();
 
@@ -19,10 +18,9 @@ class PlayerController
 
 public:
 	PlayerController(Field* field);
-	Player* GetSelectedPlayer() { return selectedPlayer; }
+	std::shared_ptr<Player> GetSelectedPlayer() { return mSelectedPlayer; }
+	void MakeControlledMove(Cell* cell);
 	void OnMoveEnded();
 	void Update(const float dt);
-	/*bool HumanControl() { return selectedPlayer->IsHuman(); }
-	ePlayerColor GetCurrentPlayerColor() { return selectedPlayer->GetPlayerColor(); }*/
 	~PlayerController();
 };

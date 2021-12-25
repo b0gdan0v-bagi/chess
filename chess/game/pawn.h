@@ -10,6 +10,8 @@ class Pawn : public Figure
 	virtual bool OnEventSelf(GameEventBase* event) override { return false; };
 public:
 	Pawn(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
+
+	std::vector<Cell*> GetPossibleCells();
 };
 
 

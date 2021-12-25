@@ -13,7 +13,7 @@ void Cell::UpdateSelf(const float dt)
 
 }
 
-Cell::Cell(const Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord) 
+Cell::Cell(Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord) 
 	: Entity("cell",window)
 	, mField(field)
 	, mCoord(coord)
