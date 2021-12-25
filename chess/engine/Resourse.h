@@ -47,7 +47,7 @@ public:
 
 class Resourse
 {
-	std::unordered_map<std::string, ItemBase*> _data;
+	std::unordered_map<std::string, std::shared_ptr<ItemBase>> _data;
 	bool LoadResourses();
 
 public:
@@ -55,14 +55,14 @@ public:
 	void Start();
 	void Stop();
 	template <typename T>
-	T* GetData(const std::string& hash) 
+	std::shared_ptr<T> GetData(const std::string& hash) 
 	{
 		const auto it = _data.find(hash);
 		if (it == _data.end())
 		{
 			return nullptr;
 		}
-		return static_cast<T*>((*it).second);
+		return std::static_pointer_cast<T>((*it).second);
 	}
 };
 
