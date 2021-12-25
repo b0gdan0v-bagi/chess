@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "field.h"
 
+
 class PlayerController;
 
 class Player
@@ -18,6 +19,7 @@ protected:
 	Cell* ClickedAvaliableCell(Cell* cell);
 
 	Player(Field* field, ePlayerColor color, PlayerController* playerController);
+	void CompleteMove(Figure* figure, Cell* cell);
 public:
 	ePlayerColor GetPlayerColor() { return mPlayerColor; }
 	bool IsReadyToMove() { return mIsReadyToMove; }
@@ -37,8 +39,16 @@ public:
 
 class Computer : public Player
 {
+	std::vector<Cell*> mControlledCells;
+	int mCounter;
+	int mCounter_2;
+	enum class eStrategy
+	{
+		Random,
+		AllForward
+	} mStrategy;
 public:
 	Computer(Field* field, ePlayerColor color, PlayerController* playerController);
 	virtual bool IsHuman() { return false; }
-	virtual void MakeMove(Cell* cell) override {}
+	virtual void MakeMove(Cell* cell) override;
 };

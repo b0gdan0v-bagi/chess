@@ -5,7 +5,8 @@
 enum class eGameStyle
 {
 	PvE,
-	PvP
+	PvP,
+	EvE
 };
 
 enum class eCellStyle
@@ -52,5 +53,20 @@ namespace Utils
 		}
 		res.push_back(s);
 		return res;
+	}
+	static ePlayerColor AntiPlayerColor(ePlayerColor color) {
+		if (color == ePlayerColor::Black)
+		{
+			return ePlayerColor::White;
+		}
+		else if (color == ePlayerColor::White)
+		{
+			return ePlayerColor::Black;
+		}
+		return ePlayerColor::Count;
+	}
+	static int Random(int min, int max)
+	{
+		return min + (rand() % static_cast<int>(max - min + 1));
 	}
 }

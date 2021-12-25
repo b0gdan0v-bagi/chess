@@ -19,12 +19,16 @@ protected:
 
 	Cell* mCell;
 
+	eFigureType mFigureType;
+
 public:
 	Figure(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
 
 	ePlayerColor GetPlayerColor() { return mPlayerColor; }
 	void SetCell(Cell* cell) { mCell = cell; }
 	Cell* GetCell() { return mCell; }
+
+	eFigureType GetFigureType() { return mFigureType; }
 
 	virtual std::vector<Cell*> GetPossibleCells() = 0;
 };

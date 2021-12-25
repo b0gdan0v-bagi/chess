@@ -7,11 +7,7 @@
 
 void Field::DrawSelf()
 {
-	//auto test = ResourseManager->GetData<ItemTexture>("black_pawn")->GetSprite();
-	/*sf::Vector2f v = { test.getLocalBounds().width, test.getLocalBounds().height };
-	auto scale = sf::Vector2f(mCellSize.x / v.x, mCellSize.x / v.x);
-	test.setScale(scale);*/
-	//_window->draw(test);
+
 }
 void Field::UpdateSelf(const float dt)
 {
@@ -20,7 +16,7 @@ void Field::UpdateSelf(const float dt)
 
 bool Field::OnEventSelf(GameEventBase* event)
 {
-	if (event->GetType() == eEventType::MouseClicked)
+	if (event->GetType() == eEventType::MouseClicked && IsGamePlayable())
 	{
 		auto ev = static_cast<GameEventMouseClicked*>(event);
 		mPlayerController->MakeControlledMove(GetCell(GetCoordFromMouse(ev->GetMousePos())));
@@ -77,6 +73,7 @@ void Field::CreateFigures()
 				//else if { etc etc }
 				auto cell = GetCell(x, y);
 				cell->SetFigure(figure);
+				mTargets[Utils::AntiPlayerColor(c)].push_back(cell);
 			}
 		}
 	}
@@ -86,6 +83,7 @@ Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
 	: Entity("field", window)
 	, mFieldSize(8)
 	, mResoultion(resolution)
+	, mGameWon(false)
 {
 	EventManager->RegisterListener(this);
 	SetTopOwner();
@@ -169,6 +167,18 @@ Field::~Field()
 	OnEnded();
 }
 
+void Field::RenderWinText()
+{
+	if (mGameWon)
+	{
+		sf::Font font = ResourseManager->GetData<ItemFont>("TimesNewRoman")->GetData();
+		sf::Text text(mWinText, font, mResoultion.y / 10);
+		text.setPosition({ mResoultion.x / 2.f - text.getLocalBounds().width / 2.f, mResoultion.y / 2.f - mResoultion.y / 10 });
+		text.setFillColor(sf::Color::Red);
+		_window->draw(text);
+	}
+}
+
 std::vector<Cell*> Field::GetFreeCells(Cell* cell)
 {
 	std::vector<Cell*> res;
@@ -193,6 +203,44 @@ void Field::UnselectCells()
 	{
 		cell->SetSelected(false);
 	}
+}
+
+std::vector<Cell*> Field::GetOccupiedCells(ePlayerColor color)
+{
+	std::vector<Cell*> res;
+	for (const auto& cell : mCellsData)
+	{
+		if (cell && cell->HasFigure())
+		{
+			if (auto figure = cell->GetFigure())
+			{
+				if (figure->GetPlayerColor() == color)
+				{
+					res.push_back(cell);
+				}
+			}
+		}
+	}
+	return res;
+}
+
+void Field::CheckWinCondition(ePlayerColor color)
+{
+	for (auto& cell : mTargets[color])
+	{
+		if (auto figure = cell->GetFigure())
+		{
+			if (figure->GetPlayerColor() != color)
+			{
+				return;
+			}
+		}
+		else { return; }
+	}
+	mGameWon = true;
+	mWinText = "Player ";
+	mWinText += color == ePlayerColor::Black ? "black" : "white";
+	mWinText += " won";
 }
 
 sf::Vector2i Field::GetCoordFromMouse(const sf::Vector2i& mouse)

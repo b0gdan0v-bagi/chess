@@ -42,6 +42,7 @@ void Engine::Draw()
 {
 	window.clear(sf::Color(77, 83, 140));
 	mField->Draw();
+	mField->RenderWinText();
 	window.display();
 }
 

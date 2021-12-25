@@ -16,13 +16,15 @@ class Field
 	
 	size_t mFieldSize;
 	std::vector<Cell*> mCellsData;
-	//std::vector<Cell*> mPotentialCells;
-	//Cell* mSelectedCell;
 
 	sf::Vector2f mCellSize;
 	sf::Vector2f mPlayFieldSize;
 	sf::Vector2f mTextIndentSize;
 	sf::Vector2f mResoultion;
+
+	bool mGameWon;
+	std::string mWinText = "Game ended";
+	std::map<ePlayerColor, std::vector<Cell*>> mTargets;
 
 	std::unique_ptr<PlayerController> mPlayerController;
 
@@ -35,6 +37,7 @@ class Field
 	virtual void DrawSelf() override;
 	virtual void UpdateSelf(const float dt) override;
 	virtual bool OnEventSelf(GameEventBase* event) override;
+	void RenderWinText();
 public:
 	Field(sf::RenderWindow* window, const sf::Vector2f resolution);
 	~Field();
@@ -47,6 +50,11 @@ public:
 
 	void UnselectCells();
 	sf::Vector2i GetCoordFromMouse(const sf::Vector2i& mouse);
+	std::vector<Cell*> GetOccupiedCells(const ePlayerColor color);
+
+	bool IsGamePlayable() { return !mGameWon; }
+	void CheckWinCondition(ePlayerColor color);
+
 };
 
 

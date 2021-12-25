@@ -11,7 +11,10 @@ class Pawn : public Figure
 public:
 	Pawn(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
 
-	std::vector<Cell*> GetPossibleCells();
+	virtual std::vector<Cell*> GetPossibleCells() override;
+	Cell* GetPossibleCellWithDirection(eDirection direction);
+	//hint for AI
+	std::vector<eDirection> GetPossibleDirections();
 };
 
 

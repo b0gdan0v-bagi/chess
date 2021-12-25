@@ -16,6 +16,7 @@ Figure::Figure(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f 
 	, mPlayerColor(color)
 	, mPos(pos)
 	, mCell(nullptr)
+	, mFigureType(eFigureType::Count)
 {
 	SetSize(size);
 }
