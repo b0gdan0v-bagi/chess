@@ -5,7 +5,7 @@ void Cell::DrawSelf()
 	auto shape = sf::RectangleShape(_size);
 	shape.setPosition(GetPosition());
 	shape.setFillColor(mSelected ? sf::Color::Red : mColor);
-	_window->draw(shape);
+	Drawer->Add(shape);
 }
 
 void Cell::UpdateSelf(const float dt)
@@ -13,8 +13,8 @@ void Cell::UpdateSelf(const float dt)
 
 }
 
-Cell::Cell(Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord) 
-	: Entity("cell",window)
+Cell::Cell(Field* field, const sf::Vector2f size, const sf::Vector2i coord) 
+	: Entity("cell")
 	, mField(field)
 	, mCoord(coord)
 	, mFigure(nullptr)

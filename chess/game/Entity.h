@@ -18,7 +18,6 @@ class Entity
 protected:
 	sf::Sprite _sprite;
 	sf::Vector2f _size;
-	sf::RenderWindow* _window;
 	void Draw();
 	void Update(const float dt);
 	bool OnEvent(GameEventBase* event);
@@ -29,7 +28,7 @@ private:
 
 public:
 
-	Entity(const std::string& name, sf::RenderWindow* window);
+	Entity(const std::string& name);
 	virtual ~Entity();
 
 	void SetTopOwner() { _isTopOwner = true; }
@@ -37,8 +36,6 @@ public:
 	Entity* GetParent() { return _parent; }
 	void SetParent(Entity* parent) { _parent = parent; }
 	void AddChild(Entity* child);
-
-	void SetWindow(sf::RenderWindow* window) { _window = window; }
 
 	void SetName(const std::string& name) { _name = name; }
 	std::string GetName() { return _name; }

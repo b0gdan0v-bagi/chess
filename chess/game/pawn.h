@@ -9,7 +9,7 @@ class Pawn : public Figure
 	//virtual void UpdateSelf(const float dt) override {};
 	virtual bool OnEventSelf(GameEventBase* event) override { return false; };
 public:
-	Pawn(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
+	Pawn(ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
 
 	virtual std::vector<Cell*> GetPossibleCells() override;
 	Cell* GetPossibleCellWithDirection(eDirection direction);

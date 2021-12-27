@@ -3,8 +3,8 @@
 #include "Utils.h"
 #include "field.h"
 
-Pawn::Pawn(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos)
-	:Figure(window, color, size, pos)
+Pawn::Pawn(ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos)
+	:Figure(color, size, pos)
 {
 	mFigureType = eFigureType::Pawn;
 

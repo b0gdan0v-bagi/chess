@@ -3,7 +3,7 @@
 
 void Figure::DrawSelf()
 {
-	_window->draw(mSprite);
+	Drawer->Add(mSprite);
 }
 
 void Figure::UpdateSelf(const float dt)
@@ -11,8 +11,8 @@ void Figure::UpdateSelf(const float dt)
 	mSprite.setPosition(mCell->GetPosition());
 }
 
-Figure::Figure(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos)
-	: Entity("figure", window)
+Figure::Figure(ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos)
+	: Entity("figure")
 	, mPlayerColor(color)
 	, mPos(pos)
 	, mCell(nullptr)

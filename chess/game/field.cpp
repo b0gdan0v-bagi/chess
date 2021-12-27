@@ -4,6 +4,7 @@
 #include "Text.h"
 #include "pawn.h"
 #include "player.h"
+#include "Drawer.h"
 
 void Field::DrawSelf()
 {
@@ -34,7 +35,7 @@ void Field::CreateCells()
 	{
 		for (size_t x = 0; x < mFieldSize; x++)
 		{
-			Cell* cell = new Cell(this, _window, mCellSize, sf::Vector2i(x, y));
+			Cell* cell = new Cell(this, mCellSize, sf::Vector2i(x, y));
 			cell->SetColor(black ? sf::Color::Blue : sf::Color::White);
 			mCellsData[x + y * mFieldSize] = cell;
 			cell->SetPosition(sf::Vector2f(x * mCellSize.x, y * mCellSize.y) + mTextIndentSize);
@@ -68,7 +69,7 @@ void Field::CreateFigures()
 				const int y = mFieldSize - pos[1] + '0';
 				if (figureName == "pawn")
 				{
-					figure = new Pawn(_window, c, mCellSize, mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
+					figure = new Pawn(c, mCellSize, mTextIndentSize + sf::Vector2f(x * mCellSize.x, y * mCellSize.y));
 				}
 				//else if { etc etc }
 				auto cell = GetCell(x, y);
@@ -79,8 +80,8 @@ void Field::CreateFigures()
 	}
 }
 
-Field::Field(sf::RenderWindow* window, const sf::Vector2f resolution)
-	: Entity("field", window)
+Field::Field(const sf::Vector2f resolution)
+	: Entity("field")
 	, mFieldSize(8)
 	, mResoultion(resolution)
 	, mGameWon(false)
@@ -118,13 +119,13 @@ void Field::CreateLabels()
 	{
 		const char c = 'a' + i;
 		//top
-		AddChild(new Text(_window, std::string(1, c), sf::Vector2f(offsetX, 0.f), font));
+		AddChild(new Text(std::string(1, c), sf::Vector2f(offsetX, 0.f), font));
 		//bottom
-		AddChild(new Text(_window, std::string(1, c), sf::Vector2f(offsetX, mTextIndentSize.y + mPlayFieldSize.y), font));
+		AddChild(new Text(std::string(1, c), sf::Vector2f(offsetX, mTextIndentSize.y + mPlayFieldSize.y), font));
 		//left
-		AddChild(new Text(_window, std::to_string(i + 1), sf::Vector2f(mTextIndentSize.x / 2.f, offsetY), font));
+		AddChild(new Text(std::to_string(i + 1), sf::Vector2f(mTextIndentSize.x / 2.f, offsetY), font));
 		//right
-		AddChild(new Text(_window, std::to_string(i + 1), sf::Vector2f(4.f + mTextIndentSize.x + mPlayFieldSize.x, offsetY), font));
+		AddChild(new Text(std::to_string(i + 1), sf::Vector2f(4.f + mTextIndentSize.x + mPlayFieldSize.x, offsetY), font));
 
 		offsetX += mCellSize.x;
 		offsetY -= mCellSize.y;
@@ -175,7 +176,7 @@ void Field::RenderWinText()
 		sf::Text text(mWinText, font, mResoultion.y / 10);
 		text.setPosition({ mResoultion.x / 2.f - text.getLocalBounds().width / 2.f, mResoultion.y / 2.f - mResoultion.y / 10 });
 		text.setFillColor(sf::Color::Red);
-		_window->draw(text);
+		Drawer->Add(text);
 	}
 }
 

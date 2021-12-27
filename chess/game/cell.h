@@ -20,7 +20,7 @@ class Cell : public Entity
 	virtual void UpdateSelf(const float dt) override;
 	virtual bool OnEventSelf(GameEventBase* event) override { return false; };
 public:
-	Cell(Field* field, sf::RenderWindow* window, const sf::Vector2f size, const sf::Vector2i coord);
+	Cell(Field* field, const sf::Vector2f size, const sf::Vector2i coord);
 	void SetColor(sf::Color color) { mColor = color; }
 	const sf::Vector2i GetCoord() { return mCoord; };
 	void SetFigure(Figure* figure);

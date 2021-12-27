@@ -8,9 +8,11 @@ void Engine::OnStarted()
 	ResourseManager->Start();
 	SetWindow();
 
-	mField = std::make_unique<Field>(&window, mResolution);
+	mField = std::make_unique<Field>(mResolution);
 	_clock = sf::Clock();
 	EventManager->SetWindow(&window);
+
+	Drawer->SetWindow(&window);
 }
 
 void Engine::OnRestarted()
@@ -40,10 +42,10 @@ void Engine::SetWindow()
 
 void Engine::Draw()
 {
-	window.clear(sf::Color(77, 83, 140));
+	Drawer->OnFrameStarted();
 	mField->Draw();
 	mField->RenderWinText();
-	window.display();
+	Drawer->OnFrameEnded();
 }
 
 void Engine::Input()

@@ -1,4 +1,5 @@
 #include "Text.h"
+#include "Drawer.h"
 
 void Text::DrawSelf()
 {
@@ -7,11 +8,11 @@ void Text::DrawSelf()
 	sf::Text t(GetName(), mFont);
 	t.setPosition(GetPosition());
 	//t.setOrigin(-GetSize()/2.f);
-	_window->draw(t);
+	Drawer->Add(t);
 }
 
-Text::Text(sf::RenderWindow* window, const std::string& name, const sf::Vector2f coord, sf::Font font)
-	:Entity(name, window)
+Text::Text(const std::string& name, const sf::Vector2f coord, sf::Font font)
+	:Entity(name)
 	, mFont(font)
 {
 	SetPosition(coord);

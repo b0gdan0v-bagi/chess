@@ -151,6 +151,7 @@
     <ClCompile Include="engine\Parser.cpp" />
     <ClCompile Include="engine\Resourse.cpp" />
     <ClCompile Include="game\cell.cpp" />
+    <ClCompile Include="game\Drawer.cpp" />
     <ClCompile Include="game\Entity.cpp" />
     <ClCompile Include="game\field.cpp" />
     <ClCompile Include="game\figure.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="engine\Parser.h" />
     <ClInclude Include="engine\Resourse.h" />
     <ClInclude Include="game\cell.h" />
+    <ClInclude Include="game\Drawer.h" />
     <ClInclude Include="game\Entity.h" />
     <ClInclude Include="game\field.h" />
     <ClInclude Include="game\figure.h" />

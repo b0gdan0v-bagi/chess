@@ -39,7 +39,7 @@ class Field
 	virtual bool OnEventSelf(GameEventBase* event) override;
 	void RenderWinText();
 public:
-	Field(sf::RenderWindow* window, const sf::Vector2f resolution);
+	Field(const sf::Vector2f resolution);
 	~Field();
 
 	virtual void TakeEvent(GameEventBase* event) override { OnEvent(event); }

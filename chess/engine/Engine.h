@@ -7,6 +7,8 @@
 
 #include "Singleton.h"
 #include "field.h"
+#include "Drawer.h"
+
 
 
 class Engine

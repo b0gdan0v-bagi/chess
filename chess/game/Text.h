@@ -11,5 +11,5 @@ class Text : public Entity
 	virtual void UpdateSelf(const float dt) override {};
 	virtual bool OnEventSelf(GameEventBase* event) override { return false; };
 public:
-	Text(sf::RenderWindow* window, const std::string& name, const sf::Vector2f coord, sf::Font font);
+	Text(const std::string& name, const sf::Vector2f coord, sf::Font font);
 };

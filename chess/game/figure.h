@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Utils.h"
 #include "cell.h"
+#include "Drawer.h"
+
 
 class Cell;
 
@@ -22,7 +24,7 @@ protected:
 	eFigureType mFigureType;
 
 public:
-	Figure(sf::RenderWindow* window, ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
+	Figure(ePlayerColor color, const sf::Vector2f size, const sf::Vector2f pos);
 
 	ePlayerColor GetPlayerColor() { return mPlayerColor; }
 	void SetCell(Cell* cell) { mCell = cell; }

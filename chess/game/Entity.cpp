@@ -35,11 +35,10 @@ bool Entity::OnEvent(GameEventBase* event)
 	return false;
 }
 
-Entity::Entity(const std::string& name, sf::RenderWindow* window) 
+Entity::Entity(const std::string& name) 
 	:_name(name)
 	,_isTopOwner(false)
 	,_parent(nullptr)
-	,_window(window)
 {}
 
 Entity::~Entity()
